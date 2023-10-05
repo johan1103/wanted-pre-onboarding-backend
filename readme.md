@@ -1,6 +1,5 @@
 # 원티드 프리 온보딩 과제
 
----
 ## 🛠️ 요구사항 분석
 
 ### 채용공고를 등록합니다.
@@ -167,3 +166,4 @@ or
 
 ## ERD 설계
 
+<img src="https://user-images.githubusercontent.com/71641610/272816260-80387439-7301-4758-b18c-f6ede33798b2.png" width="700"/>
