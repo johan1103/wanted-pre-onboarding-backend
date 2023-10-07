@@ -17,15 +17,9 @@ public class DeletedApplicationLetter {
   private String companyName;
   @ManyToOne(fetch = FetchType.LAZY)
   private User user;
-  /**
-   *
-   id        int auto_increment
-   primary key,
-   job_post_position varchar(255) not null,
-   company_name    varchar(255) not null,
-   user_id varchar(255) not null,
-   portfolio_link varchar(45)  not null,
-   constraint fk_user
-   foreign key (user_id) references user (id)
-   */
+
+  public static DeletedApplicationLetter of(ApplicationLetter al){
+    return new DeletedApplicationLetter(null,al.getJobPost().getPosition(),al.getJobPost().getCompany().getName(),
+            al.getUser());
+  }
 }

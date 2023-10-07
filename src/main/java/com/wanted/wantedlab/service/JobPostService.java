@@ -1,14 +1,18 @@
 package com.wanted.wantedlab.service;
 
+import com.wanted.wantedlab.entity.ApplicationLetter;
 import com.wanted.wantedlab.entity.Company;
 import com.wanted.wantedlab.dto.exception.JobPostException;
 import com.wanted.wantedlab.dto.exception.JobPostExceptionInfo;
+import com.wanted.wantedlab.entity.DeletedApplicationLetter;
 import com.wanted.wantedlab.entity.JobPost;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
 import com.wanted.wantedlab.dto.jobPost.response.*;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
+import com.wanted.wantedlab.repository.ApplicationLetterRepository;
 import com.wanted.wantedlab.repository.CompanyRepository;
+import com.wanted.wantedlab.repository.DeletedApplicationLetterRepository;
 import com.wanted.wantedlab.repository.JobPostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +29,8 @@ import java.util.List;
 public class JobPostService {
   private final EntityValidator entityValidator;
   private final JobPostRepository jobPostRepository;
+  private final ApplicationLetterRepository applicationLetterRepository;
+  private final DeletedApplicationLetterRepository deletedApplicationLetterRepository;
   @Transactional
   public JobPostUploadResult upload(JobPostUploadRequest postUploadRequest){
     Company uploadCompany = entityValidator.validateCompany(postUploadRequest.getCompanyId());
@@ -36,8 +42,22 @@ public class JobPostService {
   @Transactional
   public JobPostDeleteResult delete(JobPostDeleteRequest deleteRequest) {
     JobPost jobPost = entityValidator.validateJobPost(deleteRequest.getJobPostId());
+    deleteApplicationLetters(jobPost.getId());
     jobPostRepository.delete(jobPost);
     return new JobPostDeleteResult(true);
+  }
+  private void deleteApplicationLetters(Long jobPostId){
+    List<ApplicationLetter> letters = applicationLetterRepository.findDeleteApplicationLetter(jobPostId);
+    deleteLetters(letters);
+    createDeletedLetters(letters);
+  }
+  private void createDeletedLetters(List<ApplicationLetter> letters){
+    List<DeletedApplicationLetter> deletedLetters = letters.stream().map(DeletedApplicationLetter::of).toList();
+    deletedApplicationLetterRepository.saveAll(deletedLetters);
+  }
+  private void deleteLetters(List<ApplicationLetter> letters){
+    List<Long> letterIds = letters.stream().map(ApplicationLetter::getId).toList();
+    applicationLetterRepository.deleteLetterAssociatedJobPost(letterIds);
   }
   @Transactional
   public JobPostUpdateResult update(JobPostUpdateRequest updateRequest){
