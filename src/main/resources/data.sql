@@ -1,3 +1,4 @@
+use wanted_labs;
 INSERT INTO user (id, nickname) VALUES ('kakao@14123','virtual user 1');
 INSERT INTO user (id, nickname) VALUES ('google@sg1214fgs23h','virtual user 2');
 INSERT INTO user (id, nickname) VALUES ('johan1103','virtual user 3');
