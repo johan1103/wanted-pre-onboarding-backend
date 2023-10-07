@@ -31,7 +31,9 @@ public class JobPostService {
   }
   @Transactional
   public JobPostUpdateResult update(JobPostUpdateRequest updateRequest){
-    return null;
+    JobPost jobPost = validateJobPost(updateRequest.getId());
+    jobPost.update(updateRequest);
+    return JobPostUpdateResult.of(jobPost);
   }
   public JobPost validateJobPost(Long jobPostId){
     return jobPostRepository.findById(jobPostId)
