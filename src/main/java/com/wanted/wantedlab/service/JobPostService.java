@@ -59,7 +59,7 @@ public class JobPostService {
 
   public JobPostInfoList getJobPosts(int page,int size){
     PageRequest pageRequest = PageRequest.of(page,size);
-    Slice<JobPost> jobPostSlice = jobPostRepository.findAll(pageRequest);
+    Slice<JobPost> jobPostSlice = jobPostRepository.getJobPostSlice(pageRequest);
     return JobPostInfoList.of(jobPostSlice);
   }
 }
