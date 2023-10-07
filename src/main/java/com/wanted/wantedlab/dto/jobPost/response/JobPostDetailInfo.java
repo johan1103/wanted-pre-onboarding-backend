@@ -19,6 +19,7 @@ public class JobPostDetailInfo {
   private String position;
   private Integer compensation;
   private String skills;
+  private String recruitContent;
   private List<CompanyJobPostInfo> companyOtherJobPosts;
 
   public static JobPostDetailInfo of(JobPost jp, List<JobPost> jobPosts){
@@ -26,6 +27,7 @@ public class JobPostDetailInfo {
             .filter((j)-> !Objects.equals(j.getId(), jp.getId()))
             .map(CompanyJobPostInfo::of).toList();
     return new JobPostDetailInfo(jp.getId(),jp.getCompany().getName(),jp.getCompany().getCountry()
-            ,jp.getCompany().getRegion(),jp.getPosition(),jp.getCompensation(),jp.getSkills(),companyJobPosts);
+            ,jp.getCompany().getRegion(),jp.getPosition(),jp.getCompensation(),jp.getSkills(),jp.getRecruitContent()
+            ,companyJobPosts);
   }
 }
