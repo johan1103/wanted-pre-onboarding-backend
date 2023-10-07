@@ -2,10 +2,12 @@ package com.wanted.wantedlab.dto.jobPost.response;
 
 import com.wanted.wantedlab.dto.jobPost.JobPost;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class JobPostUpdateResult {
   private Long id;
   private String position;

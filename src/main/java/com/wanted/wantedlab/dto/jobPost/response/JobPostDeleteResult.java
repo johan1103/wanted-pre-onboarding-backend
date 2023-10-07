@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class JobPostDeleteResponse {
+public class JobPostDeleteResult {
   private boolean deleteSuccess;
 }

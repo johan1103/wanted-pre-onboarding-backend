@@ -12,12 +12,8 @@ import lombok.NoArgsConstructor;
 public class JobPostUpdateRequest {
   @NotNull
   private Long id;
-  @NotEmpty
   private String position;
-  @NotEmpty
   private String recruitContent;
-  @NotEmpty
   private String skills;
-  @NotEmpty
   private Integer compensation;
 }
