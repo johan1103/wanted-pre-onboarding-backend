@@ -6,7 +6,7 @@ import com.wanted.wantedlab.dto.exception.JobPostExceptionInfo;
 import com.wanted.wantedlab.dto.jobPost.JobPost;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResponse;
+import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
@@ -32,8 +32,9 @@ public class JobPostService {
     return JobPostUploadResult.of(createdJobPost);
   }
   @Transactional
-  public JobPostDeleteResponse delete(JobPostDeleteRequest deleteRequest){
+  public JobPostDeleteResult delete(JobPostDeleteRequest deleteRequest) {
     return null;
+  }
   public JobPostUpdateResult update(JobPostUpdateRequest updateRequest){
     JobPost jobPost = validateJobPost(updateRequest.getId());
     jobPost.update(updateRequest);
