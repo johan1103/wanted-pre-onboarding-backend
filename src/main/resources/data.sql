@@ -19,6 +19,26 @@ INSERT INTO job_post (position, recruit_content, skills, compensation, company_i
 VALUES ('front-end','naver open recruit!','react,react-natvie',1000000,1);
 INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
 VALUES ('ai-research','naver open recruit!','pytorch',2000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('back-end[pay-service] junior','naver open recruit!','java,python,spring boot,django',1000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('back-end[searching-service] junior','naver open recruit!','java,python,spring boot,django',2000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('back-end[system-monitoring] junior','naver open recruit!','java,python,spring boot,django',1000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('front-end junior','naver open recruit!','react,react-natvie',1000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('ai-research junior','naver open recruit!','pytorch',2000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('back-end[pay-service] senior','naver open recruit!','java,python,spring boot,django',1000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('back-end[searching-service] senior','naver open recruit!','java,python,spring boot,django',2000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('back-end[system-monitoring] senior','naver open recruit!','java,python,spring boot,django',1000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('front-end senior','naver open recruit!','react,react-natvie',1000000,1);
+INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
+VALUES ('ai-research senior','naver open recruit!','pytorch',2000000,1);
 
 INSERT INTO job_post (position, recruit_content, skills, compensation, company_id)
 VALUES ('back-end','wanted labs open recruit!','java,python,spring boot,django',1000000,2);

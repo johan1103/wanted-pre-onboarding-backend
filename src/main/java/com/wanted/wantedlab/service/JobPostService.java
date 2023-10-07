@@ -6,11 +6,8 @@ import com.wanted.wantedlab.dto.exception.JobPostExceptionInfo;
 import com.wanted.wantedlab.dto.jobPost.JobPost;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
+import com.wanted.wantedlab.dto.jobPost.response.*;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostInfoList;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
 import com.wanted.wantedlab.repository.CompanyRepository;
 import com.wanted.wantedlab.repository.JobPostRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +16,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -61,5 +60,11 @@ public class JobPostService {
     PageRequest pageRequest = PageRequest.of(page,size);
     Slice<JobPost> jobPostSlice = jobPostRepository.getJobPostSlice(pageRequest);
     return JobPostInfoList.of(jobPostSlice);
+  }
+  public JobPostDetailInfo getJobPostDetail(Long jobPostId){
+    JobPost jobPost = validateJobPost(jobPostId);
+    PageRequest pageRequest = PageRequest.of(0,5);
+    List<JobPost> companyJobPosts = jobPostRepository.getJobPostsByCompanyId(pageRequest,jobPost.getCompany().getId());
+    return JobPostDetailInfo.of(jobPost,companyJobPosts);
   }
 }
