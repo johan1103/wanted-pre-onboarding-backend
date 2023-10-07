@@ -1,9 +1,7 @@
 package com.wanted.wantedlab.dto.jobPost;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.wanted.wantedlab.dto.company.Company;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
@@ -16,4 +14,6 @@ public class JobPost {
   private String recruitContent;
   private String skills;
   private Integer compensation;
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Company company;
 }
