@@ -71,6 +71,11 @@ public class JobPostService {
     Slice<JobPost> jobPostSlice = jobPostRepository.getJobPostSlice(pageRequest);
     return JobPostInfoList.of(jobPostSlice);
   }
+  public JobPostInfoList getSearchedJobPosts(int page,int size,String keyword){
+    PageRequest pageRequest = PageRequest.of(page,size);
+    Slice<JobPost> jobPostSlice = jobPostRepository.searchJobPosts(pageRequest,keyword);
+    return JobPostInfoList.of(jobPostSlice);
+  }
   public JobPostDetailInfo getJobPostDetail(Long jobPostId){
     JobPost jobPost = entityValidator.validateJobPost(jobPostId);
     PageRequest pageRequest = PageRequest.of(0,5);

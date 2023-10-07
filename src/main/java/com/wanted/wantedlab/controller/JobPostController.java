@@ -26,8 +26,14 @@ public class JobPostController {
     return jobPostService.delete(deleteRequest);
   }
   @GetMapping("/job-post/list")
-  public JobPostInfoList getJobPosts(@RequestParam("page")int page,@RequestParam("size")int size){
-    return jobPostService.getJobPosts(page,size);
+  public JobPostInfoList getJobPosts(@RequestParam("page")int page,@RequestParam("size")int size
+          ,@RequestParam(name = "keyword",required = false)String keyword){
+    if(keyword.isEmpty())
+      return jobPostService.getJobPosts(page,size);
+    return getSearchedJobPosts(page,size,keyword);
+  }
+  public JobPostInfoList getSearchedJobPosts(int page,int size,String keyword){
+    return jobPostService.getSearchedJobPosts(page,size,keyword);
   }
   @GetMapping("/job-post/detail")
   public JobPostDetailInfo getJobPostDetail(@RequestParam("job-post-id")Long jobPostId){

@@ -14,4 +14,7 @@ public interface JobPostRepository extends JpaRepository<JobPost,Long> {
   Slice<JobPost> getJobPostSlice(PageRequest pageRequest);
   @Query("select j from JobPost j join fetch j.company c where c.id=:company_id")
   List<JobPost> getJobPostsByCompanyId(PageRequest pageRequest, @Param("company_id")Long companyId);
+  @Query("select j from JobPost j join fetch j.company c where " +
+          "j.position like %:keyword% or j.skills like %:keyword% or c.name like %:keyword%")
+  Slice<JobPost> searchJobPosts(PageRequest pageRequest,@Param("keyword")String keyword);
 }
