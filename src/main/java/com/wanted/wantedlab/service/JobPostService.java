@@ -37,6 +37,7 @@ public class JobPostService {
     jobPostRepository.delete(jobPost);
     return new JobPostDeleteResult(true);
   }
+  @Transactional
   public JobPostUpdateResult update(JobPostUpdateRequest updateRequest){
     JobPost jobPost = validateJobPost(updateRequest.getId());
     jobPost.update(updateRequest);
