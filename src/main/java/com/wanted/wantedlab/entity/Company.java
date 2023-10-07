@@ -1,4 +1,4 @@
-package com.wanted.wantedlab.dto.company;
+package com.wanted.wantedlab.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

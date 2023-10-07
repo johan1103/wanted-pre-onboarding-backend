@@ -1,9 +1,7 @@
-package com.wanted.wantedlab.dto.jobPost;
+package com.wanted.wantedlab.entity;
 
-import com.wanted.wantedlab.dto.company.Company;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostInfoList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

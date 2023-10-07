@@ -1,7 +1,6 @@
 package com.wanted.wantedlab.dto.jobPost.response;
 
-import com.wanted.wantedlab.dto.jobPost.JobPost;
-import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
+import com.wanted.wantedlab.entity.JobPost;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
