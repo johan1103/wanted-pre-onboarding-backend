@@ -12,7 +12,7 @@ public class JobPostUploadRequest {
   private String position;
   private String content;
   private String skills;
-  private String compensation;
+  private Integer compensation;
   @NotNull
   private Long companyId;
 }
