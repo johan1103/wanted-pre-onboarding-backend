@@ -8,11 +8,14 @@ import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
+import com.wanted.wantedlab.dto.jobPost.response.JobPostInfoList;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
 import com.wanted.wantedlab.repository.CompanyRepository;
 import com.wanted.wantedlab.repository.JobPostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,5 +55,11 @@ public class JobPostService {
     return companyRepository.findById(companyId)
           .orElseThrow(()->new JobPostException("invalid company id"
                   , JobPostExceptionInfo.INVALID_COMPANY, HttpStatus.BAD_REQUEST));
+  }
+
+  public JobPostInfoList getJobPosts(int page,int size){
+    PageRequest pageRequest = PageRequest.of(page,size);
+    Slice<JobPost> jobPostSlice = jobPostRepository.getJobPostSlice(pageRequest);
+    return JobPostInfoList.of(jobPostSlice);
   }
 }
