@@ -27,5 +27,7 @@ public class JobPostController {
   public JobPostDeleteResult deleteJobPost(@RequestBody JobPostDeleteRequest deleteRequest){
     return jobPostService.delete(deleteRequest);
   }
+  @GetMapping("/job-post/list")
+  public
 
 }
