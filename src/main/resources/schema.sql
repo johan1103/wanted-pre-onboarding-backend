@@ -49,6 +49,6 @@ CREATE TABLE IF NOT EXISTS deleted_application_letter
     job_post_position varchar(255) not null,
     company_name    varchar(255) not null,
     user_id varchar(255) not null,
-    constraint fk_user
+    constraint fk_user_deleted_letter
         foreign key (user_id) references user (id)
 );
