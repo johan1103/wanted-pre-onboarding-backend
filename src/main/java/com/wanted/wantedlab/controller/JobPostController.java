@@ -3,10 +3,7 @@ package com.wanted.wantedlab.controller;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostInfoList;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
+import com.wanted.wantedlab.dto.jobPost.response.*;
 import com.wanted.wantedlab.service.JobPostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +29,8 @@ public class JobPostController {
   public JobPostInfoList getJobPosts(@RequestParam("page")int page,@RequestParam("size")int size){
     return jobPostService.getJobPosts(page,size);
   }
-
+  @GetMapping("/job-post/detail")
+  public JobPostDetailInfo getJobPostDetail(@RequestParam("job-post-id")Long jobPostId){
+    return jobPostService.getJobPostDetail(jobPostId);
+  }
 }
