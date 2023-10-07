@@ -10,8 +10,6 @@ import lombok.Getter;
 @Getter
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
   private String nickname;
-  private String skills;
 }

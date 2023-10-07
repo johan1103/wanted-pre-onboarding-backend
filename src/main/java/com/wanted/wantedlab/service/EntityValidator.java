@@ -30,7 +30,7 @@ public class EntityValidator {
             .orElseThrow(()->new JobPostException("invalid company id"
                     , JobPostExceptionInfo.INVALID_COMPANY, HttpStatus.BAD_REQUEST));
   }
-  public User validateUser(Long userId){
+  public User validateUser(String userId){
     return userRepository.findById(userId)
             .orElseThrow(()->new UserException("invalid user id"
                     , UserExceptionInfo.INVALID_USERID, HttpStatus.BAD_REQUEST));

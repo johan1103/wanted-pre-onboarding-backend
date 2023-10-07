@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class ApplyResult {
   private Long applyId;
   private Long jobPostId;
-  private Long userId;
+  private String userId;
 
   public static ApplyResult of(ApplicationLetter letter){
     return new ApplyResult(letter.getId(),letter.getJobPost().getId(),letter.getUser().getId());

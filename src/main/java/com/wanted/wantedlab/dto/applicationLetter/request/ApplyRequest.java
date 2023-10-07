@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class ApplyRequest {
-  private Long userId;
+  private String userId;
   private Long jobPostId;
   private String portfolioUrl;
 }
