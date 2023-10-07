@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionController {
   @ExceptionHandler(JobPostException.class)
-  public ResponseEntity<JobPostException> postException(JobPostException e){
-    return new ResponseEntity<>(e,e.getHttpStatus());
+  public ResponseEntity<ErrorResponse> postException(JobPostException e){
+    ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),e.getExceptionInfo().getCode(),e.getHttpStatus());
+    return new ResponseEntity<>(errorResponse,errorResponse.getHttpStatus());
   }
 }
