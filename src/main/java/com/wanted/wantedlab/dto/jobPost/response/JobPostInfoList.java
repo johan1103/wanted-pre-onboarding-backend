@@ -20,7 +20,7 @@ public class JobPostInfoList {
   public static JobPostInfoList of(Slice<JobPost> jobPostSlice){
     List<JobPostInfo> jobPosts = jobPostSlice.getContent().stream().map(JobPostInfo::of).toList();
     int page = jobPostSlice.getPageable().getPageNumber();
-    int size = jobPostSlice.getSize();
+    int size = jobPosts.size();
     boolean hasNext = jobPostSlice.hasNext();
     return new JobPostInfoList(page,size,hasNext,jobPosts);
   }
