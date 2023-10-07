@@ -4,6 +4,7 @@ import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
+import com.wanted.wantedlab.dto.jobPost.response.JobPostInfoList;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
 import com.wanted.wantedlab.service.JobPostService;
@@ -28,6 +29,8 @@ public class JobPostController {
     return jobPostService.delete(deleteRequest);
   }
   @GetMapping("/job-post/list")
-  public
+  public JobPostInfoList getJobPosts(@RequestParam("page")int page,@RequestParam("size")int size){
+    return null;
+  }
 
 }

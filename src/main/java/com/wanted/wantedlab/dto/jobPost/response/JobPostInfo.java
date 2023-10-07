@@ -1,5 +1,6 @@
 package com.wanted.wantedlab.dto.jobPost.response;
 
+import com.wanted.wantedlab.dto.jobPost.JobPost;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,9 @@ public class JobPostInfo {
   private String position;
   private Integer compensation;
   private String skills;
-  
+
+  public static JobPostInfo of(JobPost jp){
+    return new JobPostInfo(jp.getId(),jp.getCompany().getName(),jp.getCompany().getCountry()
+            ,jp.getCompany().getRegion(),jp.getPosition(),jp.getCompensation(),jp.getSkills());
+  }
 }

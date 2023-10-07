@@ -3,6 +3,7 @@ package com.wanted.wantedlab.dto.jobPost;
 import com.wanted.wantedlab.dto.company.Company;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
+import com.wanted.wantedlab.dto.jobPost.response.JobPostInfoList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
