@@ -14,6 +14,6 @@ public class JobPostController {
   private final JobPostService jobPostService;
   @PostMapping("/job")
   public JobPostUploadResult uploadJobPost(@RequestBody JobPostUploadRequest uploadRequest){
-    return null;
+    return jobPostService.upload(uploadRequest);
   }
 }
