@@ -7,6 +7,7 @@ import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
 import com.wanted.wantedlab.service.JobPostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class JobPostController {
   private final JobPostService jobPostService;
   @PostMapping("/job-post")
-  public JobPostUploadResult uploadJobPost(@RequestBody JobPostUploadRequest uploadRequest){
+  public JobPostUploadResult uploadJobPost(@RequestBody @Valid JobPostUploadRequest uploadRequest){
     return jobPostService.upload(uploadRequest);
   }
   @PutMapping("/job-post")
-  public JobPostUpdateResult updateJobPost(@RequestBody JobPostUpdateRequest updateRequest){
+  public JobPostUpdateResult updateJobPost(@RequestBody @Valid JobPostUpdateRequest updateRequest){
     return jobPostService.update(updateRequest);
   }
   @DeleteMapping("/job-post")
