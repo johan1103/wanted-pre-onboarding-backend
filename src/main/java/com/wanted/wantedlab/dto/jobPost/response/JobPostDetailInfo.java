@@ -1,10 +1,12 @@
 package com.wanted.wantedlab.dto.jobPost.response;
 
+import com.wanted.wantedlab.dto.jobPost.JobPost;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +20,12 @@ public class JobPostDetailInfo {
   private Integer compensation;
   private String skills;
   private List<CompanyJobPostInfo> companyOtherJobPosts;
+
+  public static JobPostDetailInfo of(JobPost jp, List<JobPost> jobPosts){
+    List<CompanyJobPostInfo> companyJobPosts = jobPosts.stream()
+            .filter((j)-> !Objects.equals(j.getId(), jp.getId()))
+            .map(CompanyJobPostInfo::of).toList();
+    return new JobPostDetailInfo(jp.getId(),jp.getCompany().getName(),jp.getCompany().getCountry()
+            ,jp.getCompany().getRegion(),jp.getPosition(),jp.getCompensation(),jp.getSkills(),companyJobPosts);
+  }
 }
