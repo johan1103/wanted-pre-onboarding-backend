@@ -1,10 +1,13 @@
 package com.wanted.wantedlab.controller;
 
+import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
+import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
 import com.wanted.wantedlab.service.JobPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,5 +18,9 @@ public class JobPostController {
   @PostMapping("/job")
   public JobPostUploadResult uploadJobPost(@RequestBody JobPostUploadRequest uploadRequest){
     return jobPostService.upload(uploadRequest);
+  }
+  @PutMapping("/job")
+  public JobPostUpdateResult updateJobPost(@RequestBody JobPostUpdateRequest updateRequest){
+    return null;
   }
 }
