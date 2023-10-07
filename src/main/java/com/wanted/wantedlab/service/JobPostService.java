@@ -1,9 +1,9 @@
 package com.wanted.wantedlab.service;
 
-import com.wanted.wantedlab.dto.company.Company;
+import com.wanted.wantedlab.entity.Company;
 import com.wanted.wantedlab.dto.exception.JobPostException;
 import com.wanted.wantedlab.dto.exception.JobPostExceptionInfo;
-import com.wanted.wantedlab.dto.jobPost.JobPost;
+import com.wanted.wantedlab.entity.JobPost;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
 import com.wanted.wantedlab.dto.jobPost.response.*;

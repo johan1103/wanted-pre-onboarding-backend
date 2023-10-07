@@ -1,6 +1,6 @@
 package com.wanted.wantedlab.repository;
 
-import com.wanted.wantedlab.dto.jobPost.JobPost;
+import com.wanted.wantedlab.entity.JobPost;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
