@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface JobPostRepository extends JpaRepository<JobPost,Long> {
-  @Query("select j from JobPost j")
+  @Query("select j from JobPost j join fetch j.company")
   Slice<JobPost> getJobPostSlice(PageRequest pageRequest);
 }
