@@ -177,3 +177,10 @@ https://github.com/johan1103/wanted-pre-onboarding-backend/issues/14
 ### JobPostService (채용 공고 등록, 수정, 삭제, 조회, 검색 서비스 로직 수행)
 https://github.com/johan1103/wanted-pre-onboarding-backend/issues/15
 
+### Application Controller & Service etc (지원서 저장 컨트롤러 & 서비스, EntityValidator)
+https://github.com/johan1103/wanted-pre-onboarding-backend/issues/20
+
+### 결과
+전체 테스트 커버리지 90% 달성
+<img width="1440" alt="image" src="https://github.com/johan1103/wanted-pre-onboarding-backend/assets/71641610/84476eda-abbc-4945-95ee-407d9fab88ea">
+
