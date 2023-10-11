@@ -2,8 +2,10 @@ package com.wanted.wantedlab.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
+import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
 import com.wanted.wantedlab.global.exception.GlobalExceptionController;
@@ -91,6 +93,29 @@ public class JobPostControllerTest {
               assertThat(response).usingRecursiveComparison().isEqualTo(expectedResult);
             });
     verify(jobPostService,times(1)).update(any());
+  }
+  @Test
+  @DisplayName("deleteJobPost 성공 테스트")
+  void deleteJobPost_success() throws Exception{
+    //given
+    JobPostDeleteRequest request = new JobPostDeleteRequest(1L);
+    JobPostDeleteResult expectedResult = new JobPostDeleteResult(true);
+    when(jobPostService.delete(any())).thenReturn(expectedResult);
+
+    //when
+    ResultActions resultActions = mockMvc.perform(
+            MockMvcRequestBuilders.delete("/job-post").content(mapper.writeValueAsString(request))
+                    .contentType(MediaType.APPLICATION_JSON)
+    );
+
+    //then
+    resultActions.andExpect(status().isOk())
+            .andExpect((MvcResult r)->{
+              String body = r.getResponse().getContentAsString();
+              JobPostDeleteResult response = mapper.readValue(body,JobPostDeleteResult.class);
+              assertThat(response).usingRecursiveComparison().isEqualTo(expectedResult);
+            });
+    verify(jobPostService,times(1)).delete(any());
   }
 
 }
