@@ -3,9 +3,7 @@ package com.wanted.wantedlab.service;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
+import com.wanted.wantedlab.dto.jobPost.response.*;
 import com.wanted.wantedlab.entity.*;
 import com.wanted.wantedlab.repository.ApplicationLetterRepository;
 import com.wanted.wantedlab.repository.DeletedApplicationLetterRepository;
@@ -17,6 +15,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,5 +145,39 @@ public class JobPostServiceTest {
     //then
     assertThat(result).usingRecursiveComparison().isEqualTo(result);
     verify(entityValidator,times(1)).validateJobPost(anyLong());
+  }
+  @Test
+  @DisplayName("getJobPosts 성공 테스트")
+  void getJobPosts_success(){
+    //given
+    int reqPage=0;
+    int reqSize=10;
+    Company sampleCompany = new Company(1L,"sample-company","sample-country","sample-region");
+    List<JobPost> jobPosts = new ArrayList<>();
+    for(long i=1;i<=5;i++){
+      jobPosts.add(new JobPost(i,"sample-position","sample-content",
+              "sample-skills",100000,sampleCompany));
+    }
+    when(jobPostRepository.getJobPostSlice(any()))
+            .thenReturn(new SliceImpl<>(jobPosts,PageRequest.of(reqPage,reqSize),false));
+    JobPostInfoList expectedResult = createJobPostInfoListResult();
+    //when
+    JobPostInfoList result = jobPostService.getJobPosts(reqPage,reqSize);
+
+    //then
+    assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    verify(jobPostRepository,times(1)).getJobPostSlice(any());
+  }
+  private JobPostInfoList createJobPostInfoListResult(){
+    int expectedPage=0;
+    int expectedSize=5;
+    List<JobPostInfo> expectedJobPostList = new ArrayList<>();
+    for(long i=1;i<=5;i++){
+      JobPostInfo element = new JobPostInfo(i,"sample-company",
+              "sample-country","sample-region","sample-position",100000,
+              "sample-skills");
+      expectedJobPostList.add(element);
+    }
+    return new JobPostInfoList(expectedPage,expectedSize,false,expectedJobPostList);
   }
 }
