@@ -204,4 +204,38 @@ public class JobPostServiceTest {
     }
     return new JobPostInfoList(expectedPage,expectedSize,false,expectedJobPostList);
   }
+  @Test
+  @DisplayName("getJobPostDetail 성공 테스트")
+  void getJobPostDetail_success(){
+    //given
+    long requestJobPostId = 1L;
+    Company sampleCompany = new Company(1L,"sample-company","sample-country","sample-region");
+    JobPost sampleJobPost = new JobPost(1L,"sample-position","sample-content",
+            "sample-skills",100000,sampleCompany);
+    List<JobPost> jobPosts = new ArrayList<>();
+    for(long i=1;i<=5;i++){
+      jobPosts.add(new JobPost(i,"sample-position","sample-content",
+              "sample-skills",100000,sampleCompany));
+    }
+
+    when(entityValidator.validateJobPost(anyLong())).thenReturn(sampleJobPost);
+    when(jobPostRepository.getJobPostsByCompanyId(any(),anyLong())).thenReturn(jobPosts);
+
+    List<CompanyJobPostInfo> expectedCompanyPosts = new ArrayList<>();
+    for(long i=1;i<=5;i++){
+      if(i!=1)
+        expectedCompanyPosts.add(new CompanyJobPostInfo(i,"sample-position", "sample-skills"));
+    }
+    JobPostDetailInfo expectedResult = new JobPostDetailInfo(1L,"sample-company",
+            "sample-country","sample-region","sample-position",
+            100000,"sample-skills","sample-content",expectedCompanyPosts);
+    //when
+
+    JobPostDetailInfo result = jobPostService.getJobPostDetail(requestJobPostId);
+
+    //then
+    assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    verify(entityValidator,times(1)).validateJobPost(anyLong());
+    verify(jobPostRepository,times(1)).getJobPostsByCompanyId(any(),anyLong());
+  }
 }
