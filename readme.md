@@ -174,3 +174,6 @@ or
 ### JobPostController (채용 공고 등록, 수정, 삭제, 조회, 검색 컨트롤러)
 https://github.com/johan1103/wanted-pre-onboarding-backend/issues/14
 
+### JobPostService (채용 공고 등록, 수정, 삭제, 조회, 검색 서비스 로직 수행)
+https://github.com/johan1103/wanted-pre-onboarding-backend/issues/15
+
