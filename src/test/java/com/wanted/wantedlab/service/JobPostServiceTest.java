@@ -8,11 +8,6 @@ import com.wanted.wantedlab.entity.*;
 import com.wanted.wantedlab.repository.ApplicationLetterRepository;
 import com.wanted.wantedlab.repository.DeletedApplicationLetterRepository;
 import com.wanted.wantedlab.repository.JobPostRepository;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -126,5 +121,16 @@ public class JobPostServiceTest {
     verify(deletedApplicationLetterRepository,times(1)).saveAll(any());
     verify(applicationLetterRepository,times(1)).deleteLetterAssociatedJobPost(any());
     verify(jobPostRepository,times(1)).delete(any());
+  }
+  @Test
+  @DisplayName("")
+  void name(){
+    //given
+
+
+    //when
+
+
+    //then
   }
 }
