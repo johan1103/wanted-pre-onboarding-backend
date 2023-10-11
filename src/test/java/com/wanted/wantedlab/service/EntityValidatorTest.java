@@ -2,8 +2,11 @@ package com.wanted.wantedlab.service;
 
 import com.wanted.wantedlab.dto.exception.JobPostException;
 import com.wanted.wantedlab.dto.exception.JobPostExceptionInfo;
+import com.wanted.wantedlab.dto.exception.UserException;
+import com.wanted.wantedlab.dto.exception.UserExceptionInfo;
 import com.wanted.wantedlab.entity.Company;
 import com.wanted.wantedlab.entity.JobPost;
+import com.wanted.wantedlab.entity.User;
 import com.wanted.wantedlab.repository.CompanyRepository;
 import com.wanted.wantedlab.repository.JobPostRepository;
 import com.wanted.wantedlab.repository.UserRepository;
@@ -82,7 +85,7 @@ public class EntityValidatorTest {
 
   }
   @Test
-  @DisplayName("validateCompany 실패 테스트")
+  @DisplayName("validateCompany 실패 테스트 [Id에 맞는 Company 없는 경우]")
   void validateCompany_failed_invalid_company_id(){
     //given
     String expectedMessage = "invalid company id";
@@ -97,5 +100,36 @@ public class EntityValidatorTest {
     assertThat(exception.getExceptionInfo()).isEqualTo(JobPostExceptionInfo.INVALID_COMPANY);
     assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
     verify(companyRepository,times(1)).findById(anyLong());
+  }
+
+  @Test
+  @DisplayName("validateUser 성공 테스트")
+  void validateUser_success(){
+    //given
+    User expectedResult = new User("sample-id","sample-nickname");
+    when(userRepository.findById(anyString())).thenReturn(Optional.of(expectedResult));
+
+    //when
+    User result = entityValidator.validateUser("sample-id");
+
+    //then
+    assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    verify(userRepository,times(1)).findById(anyString());
+  }
+  @Test
+  @DisplayName("validateUser 실패 테스트 [Id에 맞는 User 없는 경우]")
+  void validateUser_failed_invalid_user_id(){
+    //given
+    String expectedMessage = "invalid user id";
+    when(userRepository.findById(anyString())).thenReturn(Optional.empty());
+
+    //when
+    UserException exception = assertThrows(UserException.class,
+            ()->entityValidator.validateUser("sample-id"));
+
+    //then
+    assertThat(exception.getMessage()).isEqualTo(expectedMessage);
+    assertThat(exception.getExceptionInfo()).isEqualTo(UserExceptionInfo.INVALID_USERID);
+    assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 }
