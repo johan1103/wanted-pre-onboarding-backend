@@ -28,7 +28,7 @@ public class JobPostController {
   @GetMapping("/job-post/list")
   public JobPostInfoList getJobPosts(@RequestParam("page")int page,@RequestParam("size")int size
           ,@RequestParam(name = "keyword",required = false)String keyword){
-    if(keyword.isEmpty())
+    if(keyword==null)
       return jobPostService.getJobPosts(page,size);
     return getSearchedJobPosts(page,size,keyword);
   }
