@@ -22,7 +22,7 @@ public class ApplicationLetterService {
     JobPost jobPost = entityValidator.validateJobPost(applyRequest.getJobPostId());
     ApplicationLetter letter = ApplicationLetter.createApplicationLetter(applyRequest,user,jobPost);
 
-    applicationLetterRepository.save(letter);
-    return ApplyResult.of(letter);
+    ApplicationLetter savedLetter = applicationLetterRepository.save(letter);
+    return ApplyResult.of(savedLetter);
   }
 }
