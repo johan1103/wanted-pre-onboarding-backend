@@ -1,8 +1,10 @@
 package com.wanted.wantedlab.service;
 
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
+import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
+import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
 import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
 import com.wanted.wantedlab.entity.*;
 import com.wanted.wantedlab.repository.ApplicationLetterRepository;
@@ -123,14 +125,23 @@ public class JobPostServiceTest {
     verify(jobPostRepository,times(1)).delete(any());
   }
   @Test
-  @DisplayName("")
-  void name(){
+  @DisplayName("update 성공 테스트")
+  void update_success(){
     //given
-
+    JobPostUpdateRequest request = new JobPostUpdateRequest(1L,"updated-position",
+            "updated-content",null, 1000000);
+    Company sampleCompany = new Company(1L,"sample-company","sample-country","sample-region");
+    JobPost sampleJobPost = new JobPost(1L,"sample-position","sample-content",
+            "sample-skills",100000,sampleCompany);
+    when(entityValidator.validateJobPost(anyLong())).thenReturn(sampleJobPost);
+    JobPostUpdateResult expectedResult = new JobPostUpdateResult(1L,"updated-position",
+            "updated-content","sample-position", 1000000);
 
     //when
-
+    JobPostUpdateResult result = jobPostService.update(request);
 
     //then
+    assertThat(result).usingRecursiveComparison().isEqualTo(result);
+    verify(entityValidator,times(1)).validateJobPost(anyLong());
   }
 }
