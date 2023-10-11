@@ -124,16 +124,7 @@ public class JobPostControllerTest {
     //given
     int reqPage=0;
     int reqSize=10;
-    int expectedPage=0;
-    int expectedSize=3;
-    List<JobPostInfo> expectedJobPostList = new ArrayList<>();
-    for(int i=1;i<=3;i++){
-      JobPostInfo element = new JobPostInfo(1L,"sample-company ("+i+")",
-              "sample-country","sample-region","sample-position",1000,
-              "sample-skills");
-      expectedJobPostList.add(element);
-    }
-    JobPostInfoList expectedResult = new JobPostInfoList(expectedPage,expectedSize,false,expectedJobPostList);
+    JobPostInfoList expectedResult = createJobPostInfoListResult();
     when(jobPostService.getJobPosts(anyInt(),anyInt())).thenReturn(expectedResult);
 
     //when
@@ -150,6 +141,46 @@ public class JobPostControllerTest {
                       assertThat(response).usingRecursiveComparison().isEqualTo(expectedResult);
                     });
     verify(jobPostService, never()).getSearchedJobPosts(anyInt(),anyInt(),anyString());
+  }
+
+  @Test
+  @DisplayName("getJobPosts(키워드 포함) 성공 테스트")
+  void getJobPosts_success_with_keyword() throws Exception{
+    //given
+    int reqPage=0;
+    int reqSize=10;
+    String keyword = "keyword-sample";
+    JobPostInfoList expectedResult = createJobPostInfoListResult();
+    when(jobPostService.getSearchedJobPosts(anyInt(),anyInt(),anyString())).thenReturn(expectedResult);
+
+    //when
+    ResultActions resultActions = mockMvc.perform(
+            MockMvcRequestBuilders.get("/job-post/list").param("page",String.valueOf(reqPage))
+                    .param("size",String.valueOf(reqSize)).param("keyword",keyword)
+    );
+
+    //then
+    resultActions.andExpect(status().isOk())
+            .andExpect((MvcResult r)->{
+              String body = r.getResponse().getContentAsString();
+              JobPostInfoList response = mapper.readValue(body,JobPostInfoList.class);
+              assertThat(response).usingRecursiveComparison().isEqualTo(expectedResult);
+            });
+    verify(jobPostService,never()).getJobPosts(anyInt(),anyInt());
+  }
+
+  private JobPostInfoList createJobPostInfoListResult(){
+    int expectedPage=0;
+    int expectedSize=3;
+    List<JobPostInfo> expectedJobPostList = new ArrayList<>();
+    for(int i=1;i<=3;i++){
+      JobPostInfo element = new JobPostInfo(1L,"sample-company ("+i+")",
+              "sample-country","sample-region","sample-position",1000,
+              "sample-skills");
+      expectedJobPostList.add(element);
+    }
+    JobPostInfoList expectedResult = new JobPostInfoList(expectedPage,expectedSize,false,expectedJobPostList);
+    return expectedResult;
   }
 
 }
