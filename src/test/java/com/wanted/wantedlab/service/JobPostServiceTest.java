@@ -147,6 +147,30 @@ public class JobPostServiceTest {
     verify(entityValidator,times(1)).validateJobPost(anyLong());
   }
   @Test
+  @DisplayName("getSearchedJobPosts 성공 테스트")
+  void getSearchedJobPosts_success(){
+    //given
+    int reqPage=0;
+    int reqSize=10;
+    String keyword = "keyword-sample";
+    Company sampleCompany = new Company(1L,"sample-company","sample-country","sample-region");
+    List<JobPost> jobPosts = new ArrayList<>();
+    for(long i=1;i<=5;i++){
+      jobPosts.add(new JobPost(i,"sample-position","sample-content",
+              "sample-skills",100000,sampleCompany));
+    }
+    when(jobPostRepository.searchJobPosts(any(),anyString()))
+            .thenReturn(new SliceImpl<>(jobPosts,PageRequest.of(reqPage,reqSize),false));
+    JobPostInfoList expectedResult = createJobPostInfoListResult();
+    //when
+    JobPostInfoList result = jobPostService.getSearchedJobPosts(reqPage,reqSize,keyword);
+
+    //then
+    assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    verify(jobPostRepository,times(1)).searchJobPosts(any(),anyString());
+  }
+
+  @Test
   @DisplayName("getJobPosts 성공 테스트")
   void getJobPosts_success(){
     //given
