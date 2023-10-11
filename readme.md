@@ -167,3 +167,10 @@ or
 ## ERD 설계
 
 <img src="https://user-images.githubusercontent.com/71641610/272816260-80387439-7301-4758-b18c-f6ede33798b2.png" width="700"/>
+
+
+## Unit Test
+
+### JobPostController (채용 공고 등록, 수정, 삭제, 조회, 검색 컨트롤러)
+https://github.com/johan1103/wanted-pre-onboarding-backend/issues/14
+
