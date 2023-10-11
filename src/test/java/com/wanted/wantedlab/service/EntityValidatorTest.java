@@ -64,5 +64,38 @@ public class EntityValidatorTest {
     assertThat(exception.getMessage()).isEqualTo(expectedMessage);
     assertThat(exception.getExceptionInfo()).isEqualTo(JobPostExceptionInfo.INVALID_JOBPOSTID);
     assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+    verify(jobPostRepository,times(1)).findById(anyLong());
+  }
+  @Test
+  @DisplayName("validateCompany 성공 테스트")
+  void validateCompany_success(){
+    //given
+    Company expectedResult = new Company(1L,"sample-company","sample-country","sample-region");
+    when(companyRepository.findById(anyLong())).thenReturn(Optional.of(expectedResult));
+
+    //when
+    Company result = entityValidator.validateCompany(1L);
+
+    //then
+    assertThat(result).usingRecursiveComparison().isEqualTo(expectedResult);
+    verify(companyRepository,times(1)).findById(anyLong());
+
+  }
+  @Test
+  @DisplayName("validateCompany 실패 테스트")
+  void validateCompany_failed_invalid_company_id(){
+    //given
+    String expectedMessage = "invalid company id";
+    when(companyRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+    //when
+    JobPostException exception = assertThrows(JobPostException.class,
+            ()->entityValidator.validateCompany(1L));
+
+    //then
+    assertThat(exception.getMessage()).isEqualTo(expectedMessage);
+    assertThat(exception.getExceptionInfo()).isEqualTo(JobPostExceptionInfo.INVALID_COMPANY);
+    assertThat(exception.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+    verify(companyRepository,times(1)).findById(anyLong());
   }
 }
