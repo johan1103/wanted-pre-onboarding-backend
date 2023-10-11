@@ -179,8 +179,38 @@ public class JobPostControllerTest {
               "sample-skills");
       expectedJobPostList.add(element);
     }
-    JobPostInfoList expectedResult = new JobPostInfoList(expectedPage,expectedSize,false,expectedJobPostList);
-    return expectedResult;
+    return new JobPostInfoList(expectedPage,expectedSize,false,expectedJobPostList);
+  }
+
+  @Test
+  @DisplayName("getJobPostDetail 성공 테스트")
+  void getJobPostDetail_success() throws Exception{
+    //given
+    long requestJobPostId = 6L;
+    List<CompanyJobPostInfo> expectedCompanyJobPosts = new ArrayList<>();
+    for(long i=1;i<=5;i++){
+      expectedCompanyJobPosts.add(new CompanyJobPostInfo(i,"sample-position","sample-skills"));
+    }
+    JobPostDetailInfo expectedResult = new JobPostDetailInfo(requestJobPostId,
+            "sample-company","sample-country","sample-region",
+            "sample-position",100000,"sample-skills",
+            "sample-content",expectedCompanyJobPosts);
+    when(jobPostService.getJobPostDetail(anyLong())).thenReturn(expectedResult);
+
+    //when
+    ResultActions resultActions = mockMvc.perform(
+            MockMvcRequestBuilders.get("/job-post/detail")
+                    .param("job-post-id",String.valueOf(requestJobPostId))
+    );
+
+    //then
+    resultActions.andExpect(status().isOk())
+            .andExpect((MvcResult r)->{
+              String body = r.getResponse().getContentAsString();
+              JobPostDetailInfo response = mapper.readValue(body,JobPostDetailInfo.class);
+              assertThat(response).usingRecursiveComparison().isEqualTo(expectedResult);
+            });
+    verify(jobPostService,times(1)).getJobPostDetail(anyLong());
   }
 
 }
