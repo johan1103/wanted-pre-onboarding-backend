@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostDeleteRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUpdateRequest;
 import com.wanted.wantedlab.dto.jobPost.request.JobPostUploadRequest;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostDeleteResult;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUpdateResult;
-import com.wanted.wantedlab.dto.jobPost.response.JobPostUploadResult;
+import com.wanted.wantedlab.dto.jobPost.response.*;
 import com.wanted.wantedlab.global.exception.GlobalExceptionController;
 import com.wanted.wantedlab.service.JobPostService;
 import org.assertj.core.api.Assertions;
@@ -25,6 +23,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -116,6 +117,39 @@ public class JobPostControllerTest {
               assertThat(response).usingRecursiveComparison().isEqualTo(expectedResult);
             });
     verify(jobPostService,times(1)).delete(any());
+  }
+  @Test
+  @DisplayName("getJobPosts(키워드 없이) 성공 테스트")
+  void getJobPosts_success() throws Exception{
+    //given
+    int reqPage=0;
+    int reqSize=10;
+    int expectedPage=0;
+    int expectedSize=3;
+    List<JobPostInfo> expectedJobPostList = new ArrayList<>();
+    for(int i=1;i<=3;i++){
+      JobPostInfo element = new JobPostInfo(1L,"sample-company ("+i+")",
+              "sample-country","sample-region","sample-position",1000,
+              "sample-skills");
+      expectedJobPostList.add(element);
+    }
+    JobPostInfoList expectedResult = new JobPostInfoList(expectedPage,expectedSize,false,expectedJobPostList);
+    when(jobPostService.getJobPosts(anyInt(),anyInt())).thenReturn(expectedResult);
+
+    //when
+    ResultActions resultActions = mockMvc.perform(
+            MockMvcRequestBuilders.get("/job-post/list").param("page",String.valueOf(reqPage))
+                    .param("size",String.valueOf(reqSize))
+    );
+
+    //then
+    resultActions.andExpect(status().isOk())
+                    .andExpect((MvcResult r)->{
+                      String body = r.getResponse().getContentAsString();
+                      JobPostInfoList response = mapper.readValue(body,JobPostInfoList.class);
+                      assertThat(response).usingRecursiveComparison().isEqualTo(expectedResult);
+                    });
+    verify(jobPostService, never()).getSearchedJobPosts(anyInt(),anyInt(),anyString());
   }
 
 }
