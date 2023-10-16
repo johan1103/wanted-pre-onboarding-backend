@@ -399,3 +399,17 @@ spring.jpa.defer-datasource-initialization=true
 spring.sql.init.mode=always
 ```
 
+## Commit Convention
+
+### Feat
+
+기능 개발, 혹은 기능 추가로 인한 커밋
+
+### Fix
+
+오류 수정, 혹은 코드 리팩토링 및 개선
+
+### Test
+
+테스트 코드 작성
+
