@@ -384,7 +384,22 @@ null이 아닌 필드만 `JobPost`의 필드값으로 업데이트 시켜주었�
 
 <img src="https://user-images.githubusercontent.com/71641610/272816260-80387439-7301-4758-b18c-f6ede33798b2.png" width="700"/>
 
-## application-config.properties
+## Commit Convention
+
+### Feat
+
+기능 개발, 혹은 기능 추가로 인한 커밋
+
+### Fix
+
+오류 수정, 혹은 코드 리팩토링 및 개선
+
+### Test
+
+테스트 코드 작성
+
+
+## application-config.properties (실행 환경 설정)
 ```
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost:3306/"schema name"
@@ -399,17 +414,4 @@ spring.jpa.defer-datasource-initialization=true
 spring.sql.init.mode=always
 ```
 
-## Commit Convention
-
-### Feat
-
-기능 개발, 혹은 기능 추가로 인한 커밋
-
-### Fix
-
-오류 수정, 혹은 코드 리팩토링 및 개선
-
-### Test
-
-테스트 코드 작성
 
